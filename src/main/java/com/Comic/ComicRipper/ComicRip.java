@@ -27,37 +27,49 @@ public class ComicRip {
 
 	
 
-	public void rip(MultipartFile links) throws IOException {
-		terminal.StartProcess();
+	public void rip(MultipartFile links) {
+		try {
+			terminal.StartProcess();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		reader = terminal.reader;
 		writer = terminal.writer;
 		new File("./download");
-		InputStream link = links.getInputStream();
-		StringBuilder br = new StringBuilder();
-		String command = "";
-		int x, j = 1;
-		boolean flag = true;
+		InputStream link;
+		try {
+			link = links.getInputStream();
+			StringBuilder br = new StringBuilder();
+			String command = "";
+			int x, j = 1;
+			boolean flag = true;
 
-		while ((x = link.read()) != -1) {
+			while ((x = link.read()) != -1) {
 
-			if (x != '\n' && flag) {
-				br.append((char) x);
-			} else if (!flag) {
-				flag = true;
-			} else {
-				System.out.println(br.toString());
-				category(br.toString(), j++);
-				br.setLength(0);
-				flag = false;
+				if (x != '\n' && flag) {
+					br.append((char) x);
+				} else if (!flag) {
+					flag = true;
+				} else {
+					System.out.println(br.toString());
+					category(br.toString(), j++);
+					br.setLength(0);
+					flag = false;
+				}
 			}
+			command = "./rclone-v1.53.0-linux-amd64/rclone --config rclone.conf -P copy ./download linkCrawler:";
+			commandLine.commandLineFunction(reader, writer, command);
+
+			command = "rm -r download/";
+			commandLine.commandLineFunction(reader, writer, command);
+
+			terminal.process = null;
+		} catch (IOException e) {
+			
+			System.out.println("Retry");
 		}
-		command = "./rclone-v1.53.0-linux-amd64/rclone --config rclone.conf -P copy ./download linkCrawler:";
-		commandLine.commandLineFunction(reader, writer, command);
-
-		command = "rm -r download/";
-		commandLine.commandLineFunction(reader, writer, command);
-
-		terminal.process = null;
+		
 	}
 
 	public void category(String link, int j) {
