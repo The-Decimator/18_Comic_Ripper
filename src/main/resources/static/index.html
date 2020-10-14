@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>18 Comic Ripper</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.js"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"
+      defer
+    ></script>
+    <link rel="stylesheet" href="assets/styles/app.css" />
+    <script src="assets/scripts/App.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>18 Comic Ripper</h1>
+    </header>
+    <section id="downloadSection">
+      <h1>Upload Links File</h1>
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        action="/Download"
+        id="downloadFile"
+        target="_blank"
+      >
+        <input id="uploadedFile" type="file" name="links" /><br /><br />
+        <input type="submit" value="Download" />
+      </form>
+      <br />
+      <form id="stopCopy">
+        <button type="submit">Stop Download</button>
+      </form>
+    </section>
+    <section id="descriptionSection">
+      <h1>Download Status</h1>
+      <div id="description">
+        <p></p>
+      </div>
+    </section>
+  </body>
+</html>
