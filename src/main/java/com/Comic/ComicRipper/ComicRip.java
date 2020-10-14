@@ -61,8 +61,8 @@ public class ComicRip {
 			command = "./rclone-v1.53.0-linux-amd64/rclone --config rclone.conf -P copy ./download linkCrawler:";
 			commandLine.commandLineFunction(reader, writer, command);
 
-			command = "rm -r download/";
-			commandLine.commandLineFunction(reader, writer, command);
+//			command = "rm -r download/";
+//			commandLine.commandLineFunction(reader, writer, command);
 
 			terminal.process = null;
 		} catch (IOException e) {
