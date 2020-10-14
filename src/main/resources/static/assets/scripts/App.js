@@ -1,13 +1,13 @@
 const description = document.querySelector('p:last-of-type');
 const form = document.querySelector('#downloadFile');
 const stopCopy = document.querySelector('#stopCopy');
-const url = 'https://comicripper18.herokuapp.com'; //'http://localhost:5000'; //
+const url = 'http://localhost:5000'; //'https://comicripper18.herokuapp.com'; //
 let stompClient = null;
 let flag = false;
 
 stompClient = new window.StompJs.Client({
   webSocketFactory: function () {
-    return new WebSocket('wss://comicripper18.herokuapp.com/websocket');
+    return new WebSocket('ws://localhost:5000/websocket');
   },
 });
 
