@@ -85,6 +85,8 @@ public class ComicRip {
 						}
 					} catch (StringIndexOutOfBoundsException e) {
 						System.out.println("Skip");
+					}catch(IOException e) {
+						System.out.println("Retry");
 					}
 				}
 			}
