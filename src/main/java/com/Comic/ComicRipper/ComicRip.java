@@ -95,9 +95,7 @@ public class ComicRip {
 							i++;
 							indiviualPhoto(indiviualPhotoLink, j);
 						}
-					} catch (StringIndexOutOfBoundsException e) {
-						System.out.println("Skip");
-					}catch(IOException e) {
+					} catch (Exception e) {
 						System.out.println("Retry");
 					}
 				}
