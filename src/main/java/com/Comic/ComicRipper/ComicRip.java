@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,6 @@ public class ComicRip {
 
 	BufferedReader reader;
 	BufferedWriter writer;
-
-	
 
 	public void rip(MultipartFile links) {
 		try {
@@ -66,35 +65,35 @@ public class ComicRip {
 
 			terminal.process = null;
 		} catch (IOException e) {
-			
+
 			System.out.println("Retry");
 		}
-		
+
 	}
 
 	public void category(String link, int j) {
 		try {
+			new File("./download/ch" + j + "");
 			URL arcJava = new URL(link);
 			java.net.URLConnection yc = arcJava.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
 			String inputLine;
-			int i = 0;
-			new File("./download/" + j + "");
+			// int i = 0;
 			while ((inputLine = in.readLine()) != null) {
 				if ((inputLine.contains("id=\"album_photo_") && inputLine.contains("src=\""))
 						|| (inputLine.contains("id=\"album_photo_") && inputLine.contains("data-original=\""))) {
 					try {
-						if (i < 5) {
-							String sub = inputLine.substring(inputLine.indexOf("src=\""));
-							String indiviualPhotoLink = sub.substring(5, sub.indexOf("\" "));
-							i++;
-							indiviualPhoto(indiviualPhotoLink, j);
-						} else {
-							String sub = inputLine.substring(inputLine.indexOf("data-original=\""));
-							String indiviualPhotoLink = sub.substring(15, sub.indexOf("\" "));
-							i++;
-							indiviualPhoto(indiviualPhotoLink, j);
-						}
+//						if (i < 5) {
+//							String sub = inputLine.substring(inputLine.indexOf("src=\""));
+//							String indiviualPhotoLink = sub.substring(5, sub.indexOf("\" "));
+//							i++;
+//							indiviualPhoto(indiviualPhotoLink, j);
+//						} else {
+						String sub = inputLine.substring(inputLine.indexOf("data-original=\""));
+						String indiviualPhotoLink = sub.substring(15, sub.indexOf("\" "));
+						// i++;
+						indiviualPhoto(indiviualPhotoLink, j);
+						// }
 					} catch (Exception e) {
 						System.out.println("Retry");
 					}
@@ -102,7 +101,10 @@ public class ComicRip {
 			}
 			in.close();
 
-		} catch (MalformedURLException e) {
+		}catch(UnknownHostException e) {
+			System.out.println("retry");
+		}
+		catch (MalformedURLException e) {
 
 			e.printStackTrace();
 			System.exit(0);
@@ -114,7 +116,7 @@ public class ComicRip {
 	}
 
 	public void indiviualPhoto(String link, int i) throws IOException {
-		String command = "wget -P ./download/" + i + "/ " + link + "";
+		String command = "wget -P ./download/ch" + i + "/ " + link + "";
 		commandLine.commandLineFunction(reader, writer, command);
 	}
 }
